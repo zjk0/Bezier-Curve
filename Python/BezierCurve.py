@@ -10,10 +10,11 @@ class BezierCurve:
     @param self: The instance itself (No need to input while using)
     @param CurveOrdef: The ordef of bezier curve
     @param ControlPoints: All control points of bezier curve
+    @param CurveAccuracy: The amount of points on curve
 
     @return none
     """
-    def __init__ (self, CurveOrder, ControlPoints):
+    def __init__ (self, CurveOrder, ControlPoints, CurveAccuracy):
         if CurveOrder + 1 != ControlPoints.shape[0]:
             print("Error! Curve order add 1 must be equal to the number of control points!")
             return
@@ -23,7 +24,8 @@ class BezierCurve:
         
         self.CurveOrder = CurveOrder
         self.ControlPoints = ControlPoints
-        self.Curve = np.zeros((100, 2))
+        self.CurveAccuracy = CurveAccuracy
+        self.Curve = np.zeros((CurveAccuracy, 2))
 
     """
     @brief Use DeCasteljau algorithm to calculate bezier curve
@@ -66,12 +68,12 @@ class BezierCurve:
             print("Error! Curve order add 1 must be equal to the number of control points!")
             return
         
-        bezier_curve = np.zeros((100, 2))
+        bezier_curve = np.zeros((self.CurveAccuracy, 2))
         i = 0
         ControlPoints_x = self.ControlPoints[:, 0]
         ControlPoints_y = self.ControlPoints[:, 1]
 
-        for t in np.linspace(0, 1, 100):
+        for t in np.linspace(0, 1, self.CurveAccuracy):
             bezier_curve[i, 0] = self.DeCasteljau(t, self.CurveOrder, ControlPoints_x)
             bezier_curve[i, 1] = self.DeCasteljau(t, self.CurveOrder, ControlPoints_y)
             i += 1
@@ -92,20 +94,20 @@ class BezierCurve:
 
 
 # Test
-ControlPoints = np.zeros((7, 2))
-ControlPoints[0, 0] = 1
+CurveOrder = 5
+ControlPoints = np.zeros((CurveOrder + 1, 2))
+CurveAccuracy = 100
+ControlPoints[0, 0] = 0
 ControlPoints[0, 1] = 0
-ControlPoints[1, 0] = 0
+ControlPoints[1, 0] = 1
 ControlPoints[1, 1] = 0
 ControlPoints[2, 0] = 2
-ControlPoints[2, 1] = 2
+ControlPoints[2, 1] = 0
 ControlPoints[3, 0] = 3
-ControlPoints[3, 1] = 3
+ControlPoints[3, 1] = 0
 ControlPoints[4, 0] = 4
-ControlPoints[4, 1] = 2
-ControlPoints[5, 0] = 6
+ControlPoints[4, 1] = 0
+ControlPoints[5, 0] = 5
 ControlPoints[5, 1] = 0
-ControlPoints[6, 0] = 5
-ControlPoints[6, 1] = 0
-bezier_curve = BezierCurve(6, ControlPoints)
+bezier_curve = BezierCurve(CurveOrder, ControlPoints, CurveAccuracy)
 bezier_curve.DrawCruve()
