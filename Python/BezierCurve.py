@@ -92,22 +92,19 @@ class BezierCurve:
         plt.plot(self.Curve[:, 0], self.Curve[:, 1])
         plt.show()
 
+if __name__ == '__main__':
+    # Test
+    CurveOrder = 3
+    ControlPoints = np.zeros((CurveOrder + 1, 2))
+    CurveAccuracy = 100
+    ControlPoints[0, 0] = 0.08
+    ControlPoints[0, 1] = 0.234
+    ControlPoints[1, 0] = 0.08
+    ControlPoints[1, 1] = 0
+    ControlPoints[2, 0] = 0
+    ControlPoints[2, 1] = 0
+    ControlPoints[3, 0] = 0
+    ControlPoints[3, 1] = 0
 
-# Test
-CurveOrder = 5
-ControlPoints = np.zeros((CurveOrder + 1, 2))
-CurveAccuracy = 100
-ControlPoints[0, 0] = 0
-ControlPoints[0, 1] = 0
-ControlPoints[1, 0] = 1
-ControlPoints[1, 1] = 0
-ControlPoints[2, 0] = 2
-ControlPoints[2, 1] = 0
-ControlPoints[3, 0] = 3
-ControlPoints[3, 1] = 0
-ControlPoints[4, 0] = 4
-ControlPoints[4, 1] = 0
-ControlPoints[5, 0] = 5
-ControlPoints[5, 1] = 0
-bezier_curve = BezierCurve(CurveOrder, ControlPoints, CurveAccuracy)
-bezier_curve.DrawCruve()
+    bezier_curve = BezierCurve(CurveOrder, ControlPoints, CurveAccuracy)
+    bezier_curve.DrawCruve()
